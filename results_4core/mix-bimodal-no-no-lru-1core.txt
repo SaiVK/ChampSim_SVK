@@ -1,0 +1,16 @@
+
+*** ChampSim Multicore Out-of-Order Simulator ***
+
+Warmup Instructions: 1000000
+Simulation Instructions: 10000000
+Number of CPUs: 1
+LLC sets: 2048
+LLC ways: 16
+Off-chip DRAM Size: 4096 MB Channels: 1 Width: 64-bit Data Rate: 1600 MT/s
+
+bimodal-no-no-lru-1core: src/main.cc:596: int main(int, char**): Assertion `0' failed.
+CPU 0 runs /home/sai/ChampSim-master//zeusmp_600B.trace.gz
+CPU 1 runs /home/sai/ChampSim-master//sphinx3_2520B.trace.gz
+
+*** Too many traces for the configured number of cores ***
+
