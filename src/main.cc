@@ -1043,6 +1043,7 @@ int main(int argc, char** argv)
     // simulation entry point
     start_time = time(NULL);
     uint8_t run_simulation = 1;
+    uint64_t cycle = 0;
     while (run_simulation) {
 
         uint64_t elapsed_second = (uint64_t)(time(NULL) - start_time),
@@ -1050,10 +1051,22 @@ int main(int argc, char** argv)
                  elapsed_hour = elapsed_minute / 60;
         elapsed_minute -= elapsed_hour*60;
         elapsed_second -= (elapsed_hour*3600 + elapsed_minute*60);
-
+        
+        cycle++;
         for (int i=0; i<NUM_CPUS; i++) {
             // proceed one cycle
             current_core_cycle[i]++;
+            
+            //Refreshing the R bit every 200th cycle
+            if(cycle%200 == 0){
+            	map<uint64_t,pair<bool,bool>>::iterator it;
+            	for(it = nru_state.begin();it!=nru_state.end();it++){
+            		it->second.first = 0;
+            		if(it->second.first == 0 && it->second.second == 0){
+            			nru_pages.push_back(it->first);
+            		}
+            	}
+            }
 
             //cout << "Trying to process instr_id: " << ooo_cpu[i].instr_unique_id << " fetch_stall: " << +ooo_cpu[i].fetch_stall;
             //cout << " stall_cycle: " << stall_cycle[i] << " current: " << current_core_cycle[i] << endl;
